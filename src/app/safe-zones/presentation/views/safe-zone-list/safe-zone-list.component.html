@@ -1,0 +1,95 @@
+<app-page-heading
+  [eyebrow]="'safeZones.eyebrow' | translate"
+  [title]="'safeZones.title' | translate"
+  [description]="descriptionKey() | translate: { count: store.zones().length, name: senior()?.firstName ?? '' }"
+/>
+
+<section class="module-board">
+  <div class="module-visual">
+    <app-map-board
+      [compact]="true"
+      [initials]="senior()?.initials ?? ''"
+      [zoneLabel]="parkZone()?.name ?? ''"
+      [homeLabel]="homeZone() ? ('map.home' | translate) : ''"
+    />
+  </div>
+
+  <div class="module-list">
+    @if (store.loading()) {
+      <div class="state"><p>{{ 'common.loading' | translate }}</p></div>
+    } @else if (store.error()) {
+      <div class="state"><p class="form-error">{{ 'errors.generic' | translate }}</p><button type="button" class="ghost-button ghost-button--inline" (click)="store.load()">{{ 'common.retry' | translate }}</button></div>
+    }
+
+    @for (zone of store.zones(); track zone.id) {
+      <article class="list-row" [class.is-off]="!zone.active">
+        <span class="list-icon" [class.list-icon--muted]="!zone.active"><app-icon [name]="iconFor(zone)" /></span>
+        <div>
+          <h3>{{ zone.name }}</h3>
+          <p>{{ 'safeZones.meta' | translate: { radius: zone.radiusMeters } }} · {{ (zone.active ? 'safeZones.active' : 'safeZones.inactive') | translate }}</p>
+        </div>
+        <div class="list-row__actions">
+          <label class="switch" [attr.title]="(zone.active ? 'safeZones.deactivate' : 'safeZones.activate') | translate">
+            <input type="checkbox" [checked]="zone.active" (change)="store.toggle(zone)" [attr.aria-label]="'safeZones.toggle' | translate: { name: zone.name }" />
+            <span class="switch__track"></span>
+          </label>
+          <button type="button" class="icon-button icon-button--danger" (click)="store.remove(zone.id)" [attr.aria-label]="'safeZones.remove' | translate: { name: zone.name }">
+            <app-icon name="trash" [size]="16" />
+          </button>
+        </div>
+      </article>
+    } @empty {
+      @if (!store.loading() && !store.error()) {
+        <div class="state"><app-icon name="shield" [size]="34" /><p>{{ 'safeZones.empty' | translate }}</p></div>
+      }
+    }
+
+    <button type="button" class="coral-button" (click)="openModal()">
+      {{ 'safeZones.create' | translate }} <app-icon name="arrow" [size]="17" />
+    </button>
+  </div>
+</section>
+
+@if (modalOpen()) {
+  <div class="modal-backdrop" (click)="closeModal()">
+    <form class="modal" [formGroup]="form" (ngSubmit)="submit()" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="zone-title" novalidate>
+      <h2 id="zone-title">{{ 'safeZones.modal.title' | translate }}</h2>
+      <p class="modal__sub">{{ 'safeZones.modal.subtitle' | translate }}</p>
+
+      <div class="form-grid">
+        <div class="field field--full" [class.field--invalid]="invalid('name')">
+          <label for="zone-name">{{ 'safeZones.modal.name' | translate }}</label>
+          <input id="zone-name" type="text" formControlName="name" [placeholder]="'safeZones.modal.namePlaceholder' | translate" maxlength="60" />
+          @if (invalid('name')) { <p class="field__error">{{ 'errors.required' | translate }}</p> }
+        </div>
+
+        <div class="field">
+          <label for="zone-type">{{ 'safeZones.modal.type' | translate }}</label>
+          <select id="zone-type" formControlName="type">
+            @for (t of types; track t) { <option [value]="t">{{ 'safeZones.types.' + t | translate }}</option> }
+          </select>
+        </div>
+
+        <div class="field" [class.field--invalid]="invalid('radius')">
+          <label for="zone-radius">{{ 'safeZones.modal.radius' | translate }}</label>
+          <div class="range-row">
+            <input id="zone-radius" type="range" formControlName="radius" [min]="minRadius" [max]="maxRadius" step="10" />
+            <output>{{ form.controls.radius.value }} m</output>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label for="zone-address">{{ 'safeZones.modal.address' | translate }}</label>
+          <input id="zone-address" type="text" formControlName="address" [placeholder]="'safeZones.modal.addressPlaceholder' | translate" maxlength="120" />
+        </div>
+      </div>
+
+      @if (store.error()) { <p class="form-error mt">{{ 'errors.generic' | translate }}</p> }
+
+      <div class="modal__actions">
+        <button type="button" class="ghost-button" (click)="closeModal()">{{ 'common.cancel' | translate }}</button>
+        <button type="submit" class="coral-button" [disabled]="store.saving()">{{ 'safeZones.modal.submit' | translate }}</button>
+      </div>
+    </form>
+  </div>
+}

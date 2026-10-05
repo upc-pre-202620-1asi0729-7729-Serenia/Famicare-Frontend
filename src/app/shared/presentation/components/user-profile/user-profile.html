@@ -1,0 +1,20 @@
+@if (user(); as u) {
+  <div class="profile-wrap">
+    <button type="button" class="profile-button" (click)="toggle()" [attr.aria-expanded]="open()" aria-haspopup="menu">
+      <span class="avatar">{{ u.initials }}</span>
+      <span class="profile-copy">
+        <strong>{{ u.firstName }}</strong>
+        <small>{{ 'profile.roles.' + u.role | translate }}</small>
+      </span>
+      <span class="profile-caret" aria-hidden="true">⌄</span>
+    </button>
+
+    @if (open()) {
+      <div class="profile-menu" role="menu">
+        <a role="menuitem" routerLink="/profile" (click)="close()">{{ 'profile.menu.account' | translate }}</a>
+        <a role="menuitem" routerLink="/profile" fragment="plan" (click)="close()">{{ 'profile.menu.subscription' | translate }}</a>
+        <button type="button" role="menuitem" (click)="logout()">{{ 'profile.menu.logout' | translate }}</button>
+      </div>
+    }
+  </div>
+}

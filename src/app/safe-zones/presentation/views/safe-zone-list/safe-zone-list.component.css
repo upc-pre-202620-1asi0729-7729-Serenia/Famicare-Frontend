@@ -1,0 +1,13 @@
+:host { display: block; }
+
+.list-row.is-off h3 { color: var(--muted-2); }
+.list-row.is-off .list-icon { opacity: 0.8; }
+
+.module-list .state { min-height: 120px; }
+
+.mt { margin-top: 14px; }
+
+@media (max-width: 560px) {
+  .list-row { grid-template-columns: auto 1fr; }
+  .list-row__actions { grid-column: 1 / -1; justify-content: flex-end; }
+}

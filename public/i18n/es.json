@@ -1,0 +1,403 @@
+{
+  "app": {
+    "name": "FamiCare"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "viewAllDetails": "Ver todos los detalles"
+  },
+  "errors": {
+    "generic": "Algo salió mal. Inténtalo de nuevo en unos segundos.",
+    "required": "Este campo es obligatorio.",
+    "email": "Ingresa un correo válido.",
+    "phone": "Ingresa un teléfono válido.",
+    "passwordMin": "Mínimo 8 caracteres.",
+    "passwordMismatch": "Las contraseñas no coinciden."
+  },
+  "time": {
+    "justNow": "ahora mismo",
+    "minutesAgo": "hace {{count}} min",
+    "hoursAgo": "hace {{count}} h",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "now": "Ahora"
+  },
+  "nav": {
+    "caption": "Tu espacio de cuidado",
+    "main": "Navegación principal",
+    "dashboard": "Inicio",
+    "location": "Ubicación",
+    "safeZones": "Zonas seguras",
+    "alerts": "Alertas",
+    "careNetwork": "Red de cuidado",
+    "activity": "Actividad",
+    "device": "Dispositivo",
+    "help": "¿Necesitas ayuda?",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "closeNav": "Cerrar navegación",
+    "notifications": "Ver notificaciones"
+  },
+  "sidebar": {
+    "allGood": "Todo en orden",
+    "review": "Revisa su estado"
+  },
+  "status": {
+    "safe": "{{name}} está segura",
+    "insideZone": "Dentro de zona segura",
+    "attention": "{{name}} requiere atención",
+    "reason": {
+      "OUTSIDE_ZONE": "Fuera de una zona segura",
+      "LOW_BATTERY": "Batería baja en la pulsera",
+      "DISCONNECTED": "La pulsera no está conectada"
+    }
+  },
+  "map": {
+    "home": "Casa",
+    "live": "En vivo",
+    "description": "Mapa ilustrado de la ubicación actual"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Buenos días, {{name}}",
+      "afternoon": "Buenas tardes, {{name}}",
+      "evening": "Buenas noches, {{name}}"
+    },
+    "subtitle": "Aquí tienes un resumen de cómo está {{name}} hoy.",
+    "location": {
+      "kicker": "Ubicación actual",
+      "viewMap": "Ver mapa",
+      "updated": "Actualizado {{time}}"
+    },
+    "device": {
+      "kicker": "Dispositivo",
+      "title": "Pulsera de {{name}}"
+    },
+    "alert": {
+      "pending": "Atención pendiente",
+      "handled": "Alerta atendida",
+      "thanks": "Gracias por confirmar",
+      "updated": "El registro quedó actualizado.",
+      "markHandled": "Marcar atendida",
+      "reopen": "Reabrir",
+      "none": "Sin pendientes",
+      "noneHint": "No hay alertas por atender."
+    },
+    "routine": {
+      "kicker": "Actividad de hoy",
+      "title": "Una mañana tranquila",
+      "viewReport": "Ver reporte"
+    },
+    "network": {
+      "kicker": "Cuidado compartido",
+      "title": "No estás sola",
+      "open": "Abrir red de cuidado",
+      "count": "{{count}} cuidadores",
+      "shift": "{{name}} estará disponible hasta las {{time}}"
+    }
+  },
+  "location": {
+    "eyebrow": "Monitoreo en vivo",
+    "title": "Ubicación de {{name}}",
+    "description": {
+      "inside": "La señal se actualizó {{time}} y permanece dentro de la zona habitual.",
+      "outside": "La señal se actualizó {{time}} y está fuera de las zonas seguras."
+    },
+    "lastRecord": "Último registro",
+    "updated": "Actualizado",
+    "accuracy": "Precisión",
+    "state": "Estado",
+    "zone": "Zona",
+    "meters": "{{count}} metros",
+    "movement": {
+      "MOVING": "En movimiento",
+      "STILL": "Detenida"
+    },
+    "insideZone": "Dentro de zona segura",
+    "outsideZone": "Fuera de zona segura",
+    "viewHistory": "Ver historial",
+    "hideHistory": "Ocultar historial",
+    "refresh": "Actualizar ubicación",
+    "historyKicker": "Últimos registros",
+    "historyTitle": "Historial de ubicaciones"
+  },
+  "safeZones": {
+    "eyebrow": "Geocercas",
+    "title": "Zonas seguras",
+    "description": {
+      "none": "Aún no hay espacios de confianza. Crea el primero para proteger los recorridos de {{name}}.",
+      "one": "Un espacio de confianza protege los recorridos cotidianos de {{name}}.",
+      "many": "{{count}} espacios de confianza protegen los recorridos cotidianos de {{name}}."
+    },
+    "meta": "Radio de {{radius}} m",
+    "active": "Activa",
+    "inactive": "Inactiva",
+    "activate": "Activar zona",
+    "deactivate": "Desactivar zona",
+    "toggle": "Activar o desactivar {{name}}",
+    "remove": "Eliminar {{name}}",
+    "empty": "Todavía no tienes zonas seguras.",
+    "create": "Crear zona segura",
+    "types": {
+      "HOME": "Hogar",
+      "PARK": "Parque",
+      "FAMILY": "Casa de un familiar",
+      "CLINIC": "Centro de salud",
+      "OTHER": "Otro lugar"
+    },
+    "modal": {
+      "title": "Nueva zona segura",
+      "subtitle": "Define un lugar donde la familia se siente tranquila.",
+      "name": "Nombre",
+      "namePlaceholder": "Ej. Casa de Diego",
+      "type": "Tipo",
+      "radius": "Radio",
+      "address": "Dirección (opcional)",
+      "addressPlaceholder": "Calle y distrito",
+      "submit": "Guardar zona"
+    }
+  },
+  "alerts": {
+    "eyebrow": "Centro de alertas",
+    "heading": {
+      "clear": "Todo está bajo control",
+      "one": "Tienes 1 alerta pendiente",
+      "many": "Tienes {{count}} alertas pendientes"
+    },
+    "description": "Revisa los eventos recientes y confirma cuáles ya fueron atendidos.",
+    "filters": {
+      "label": "Filtrar alertas",
+      "ALL": "Todas",
+      "PENDING": "Pendientes",
+      "HANDLED": "Atendidas"
+    },
+    "emptyTitle": "Todo está bajo control",
+    "empty": "No hay alertas en esta vista.",
+    "markHandled": "Marcar atendida",
+    "reopen": "Reabrir",
+    "handleAll": "Marcar todas como atendidas",
+    "view": "Ver detalle: {{title}}",
+    "backToCenter": "Volver al centro de alertas",
+    "notFound": "No encontramos esta alerta.",
+    "status": {
+      "pending": "Pendiente de atención",
+      "handled": "Atendida"
+    },
+    "detail": {
+      "when": "Cuándo",
+      "origin": "Origen",
+      "state": "Estado"
+    },
+    "origin": {
+      "pending": "Pendiente",
+      "handledBy": "Atendida por {{name}}",
+      "AUTOMATIC": "Automática",
+      "MANUAL": "Manual",
+      "TEST": "Prueba mensual"
+    },
+    "types": {
+      "LOW_BATTERY": {
+        "pending": "Batería baja",
+        "handled": "Batería baja resuelta",
+        "description": "La pulsera tiene solo {{battery}}% de batería. Conviene cargarla pronto."
+      },
+      "BATTERY_RECHARGED": {
+        "pending": "Batería cargada al {{battery}}%",
+        "handled": "Batería cargada al {{battery}}%",
+        "description": "La alerta de ayer ya puede cerrarse."
+      },
+      "SAFE_ZONE_RETURN": {
+        "pending": "Regreso a zona segura",
+        "handled": "Regreso a zona segura",
+        "description": "Volvió a una zona segura ({{zone}})."
+      },
+      "SAFE_ZONE_EXIT": {
+        "pending": "Salió de la zona segura",
+        "handled": "Salida de zona segura atendida",
+        "description": "Salió de {{zone}}."
+      },
+      "HELP_BUTTON_TEST": {
+        "pending": "Botón de ayuda probado",
+        "handled": "Botón de ayuda probado",
+        "description": "Se verificó que el botón de ayuda de la pulsera funciona."
+      },
+      "HELP_REQUEST": {
+        "pending": "Solicitud de ayuda",
+        "handled": "Solicitud de ayuda atendida",
+        "description": "Se presionó el botón de ayuda de la pulsera."
+      }
+    }
+  },
+  "careNetwork": {
+    "eyebrow": "Cuidado compartido",
+    "title": "Red de cuidado",
+    "description": {
+      "one": "Una persona acompaña a {{name}} y puede responder cuando más lo necesita.",
+      "many": "{{count}} personas acompañan a {{name}} y pueden responder cuando más lo necesita."
+    },
+    "roles": {
+      "PRIMARY": "Cuidadora principal",
+      "COLLABORATOR": "Colaborador",
+      "PROFESSIONAL": "Cuidadora profesional"
+    },
+    "availability": {
+      "ONLINE": "En línea",
+      "AVAILABLE": "Disponible",
+      "SCHEDULED": "Con turno",
+      "INVITED": "Invitación enviada"
+    },
+    "call": "Llamar a {{name}}",
+    "remove": "Quitar a {{name}} de la red",
+    "invite": "Invitar cuidador",
+    "modal": {
+      "title": "Invitar cuidador",
+      "subtitle": "Enviaremos una invitación para que acompañe a {{name}}.",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "role": "Rol",
+      "submit": "Enviar invitación"
+    }
+  },
+  "activity": {
+    "eyebrow": "Reporte semanal",
+    "title": "Actividad y rutinas",
+    "description": {
+      "stable": "{{name}} mantiene una rutina estable, con más actividad durante las mañanas.",
+      "changed": "Detectamos cambios en la rutina de {{name}} esta semana."
+    },
+    "chartLabel": "Pasos por día de la semana",
+    "steps": "{{count}} pasos",
+    "stepsShort": "{{count}} pasos",
+    "stepsMeta": "Promedio diario · {{change}}% esta semana",
+    "outings": "{{count}} salidas",
+    "outingsAllSafe": "Todas dentro de zonas seguras",
+    "outingsSome": "{{inside}} de {{total}} dentro de zonas seguras",
+    "routineStable": "Rutina estable",
+    "routineStableMeta": "Sin periodos de inactividad inusual",
+    "routineChanged": "Rutina con cambios",
+    "routineChangedMeta": "Revisa los horarios de los últimos días",
+    "hideDetails": "Ocultar detalles",
+    "detailKicker": "Esta semana",
+    "detailTitle": "Pasos por día",
+    "events": {
+      "LEFT_HOME": {
+        "title": "Salió de casa",
+        "description": "Inicio de recorrido habitual"
+      },
+      "ARRIVED_PARK": {
+        "title": "Llegó al parque",
+        "description": "Dentro de zona segura"
+      },
+      "WALKING_PARK": {
+        "title": "Paseo en el parque",
+        "description": "Actividad normal"
+      }
+    }
+  },
+  "device": {
+    "eyebrow": "Pulsera vinculada",
+    "title": "Dispositivo de {{name}}",
+    "description": {
+      "connected": "La pulsera está conectada, con buena señal GPS y batería suficiente.",
+      "disconnected": "La pulsera no está conectada. Revisa que esté encendida y cerca de un teléfono."
+    },
+    "connected": "Conectada",
+    "disconnected": "Sin conexión",
+    "daysLeft": "{{count}} días restantes",
+    "lastSignal": "Última señal {{time}}",
+    "battery": "{{percent}}% de batería",
+    "autonomy": "Autonomía estimada de {{count}} días",
+    "gps": {
+      "HIGH": "GPS preciso",
+      "MEDIUM": "GPS aceptable",
+      "LOW": "GPS débil"
+    },
+    "signal": {
+      "HIGH": "alta",
+      "MEDIUM": "media",
+      "LOW": "baja"
+    },
+    "gpsMeta": "Señal {{signal}} · Margen de {{meters}} metros",
+    "hideDetails": "Ocultar detalles",
+    "detailKicker": "Detalle técnico",
+    "serial": "Número de serie",
+    "firmware": "Firmware",
+    "lastTest": "Última prueba del botón de ayuda",
+    "never": "Nunca",
+    "sync": "Sincronizar ahora",
+    "testHelp": "Probar botón de ayuda"
+  },
+  "profile": {
+    "eyebrow": "Mi cuenta",
+    "title": "Tu perfil",
+    "description": "Actualiza tus datos y revisa tu suscripción.",
+    "roles": {
+      "PRIMARY_CAREGIVER": "Cuidadora principal"
+    },
+    "menu": {
+      "account": "Mi cuenta",
+      "subscription": "Suscripción",
+      "logout": "Cerrar sesión"
+    },
+    "save": "Guardar cambios",
+    "saved": "Tus datos se actualizaron correctamente.",
+    "plan": {
+      "active": "Activo",
+      "FAMILY": {
+        "name": "Plan Familiar"
+      },
+      "features": {
+        "seniors": "Monitoreo de una persona mayor",
+        "caregivers": "Red de cuidado compartida",
+        "history": "Historial de ubicaciones y alertas",
+        "support": "Soporte por correo"
+      }
+    }
+  },
+  "auth": {
+    "fields": {
+      "email": "Correo electrónico",
+      "emailPlaceholder": "tucorreo@ejemplo.com",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "fullName": "Nombre completo",
+      "phone": "Teléfono"
+    },
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "login": {
+      "title": "Te damos la bienvenida",
+      "subtitle": "Ingresa para ver cómo está tu familiar.",
+      "submit": "Ingresar",
+      "submitting": "Ingresando…",
+      "forgot": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿Aún no tienes cuenta?",
+      "register": "Regístrate"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Cuidar en familia empieza con un primer paso.",
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta…",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "login": "Ingresa"
+    },
+    "forgot": {
+      "title": "Recupera tu acceso",
+      "subtitle": "Te enviaremos un enlace para crear una contraseña nueva.",
+      "submit": "Enviar enlace",
+      "back": "Volver a ingresar",
+      "sent": "Si el correo está registrado, recibirás un enlace en unos minutos."
+    },
+    "demo": {
+      "title": "Cuenta de demostración",
+      "use": "Usar estos datos"
+    },
+    "errors": {
+      "INVALID_CREDENTIALS": "Correo o contraseña incorrectos.",
+      "EMAIL_TAKEN": "Ya existe una cuenta con este correo."
+    }
+  }
+}

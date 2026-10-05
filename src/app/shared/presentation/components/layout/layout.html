@@ -1,0 +1,42 @@
+<div class="app-shell">
+  <button
+    type="button"
+    class="nav-scrim"
+    [class.is-open]="menuOpen"
+    (click)="closeMenu()"
+    [attr.aria-label]="'nav.closeNav' | translate"
+    tabindex="-1"
+  ></button>
+
+  <app-sidebar [open]="menuOpen" (closed)="closeMenu()"></app-sidebar>
+
+  <main>
+    <header class="topbar">
+      <button
+        type="button"
+        class="menu-button"
+        (click)="openMenu()"
+        [attr.aria-label]="'nav.openMenu' | translate"
+        aria-controls="app-sidebar"
+        [attr.aria-expanded]="menuOpen"
+      >
+        <app-icon name="menu" />
+      </button>
+
+      <div class="mobile-brand">Fami<span>Care</span></div>
+
+      <div class="top-actions">
+        <app-language-switcher></app-language-switcher>
+        <a class="notification-button" routerLink="/alerts" [attr.aria-label]="'nav.notifications' | translate">
+          <app-icon name="bell" />
+          @if (alerts.pendingCount() > 0) { <span></span> }
+        </a>
+        <app-user-profile></app-user-profile>
+      </div>
+    </header>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,55 @@
+@startuml device
+title Bounded context: device
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class Bracelet {
+  + id: number
+  + serialNumber: string
+  + model: string
+  + connected: boolean
+  + batteryPercent: number
+  + estimatedDaysLeft: number
+  + lastSignalAt: string
+  + gpsSignal: GpsSignal
+  + gpsAccuracyMeters: number
+  + firmwareVersion: string
+  + lastHelpTestAt: string | null
+  }
+}
+
+package "infrastructure" {
+  class BraceletResource <<interface>>
+  class BraceletAssembler {
+    + toEntityFromResource(r): Bracelet
+    + toResourceFromEntity(e): BraceletResource
+    + toEntitiesFromResponse(list): Bracelet[]
+  }
+  class BraceletApi {
+  + getBracelet()
+  + syncBracelet()
+  + testHelpButton()
+  }
+  class "BraceletApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class DeviceStore <<Injectable>> {
+  + bracelet: Signal<Bracelet | null>
+  + load(): void
+  + sync(): void
+  + testHelpButton(): void
+  }
+}
+
+BraceletApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+BraceletAssembler ..|> BaseAssembler
+Bracelet ..|> BaseEntity
+BraceletApi *-- Endpoint
+Endpoint --> BraceletAssembler
+BraceletAssembler ..> BraceletResource
+DeviceStore --> BraceletApi
+DeviceStore o-- Bracelet
+DeviceStore ..> AlertsStore : recarga alertas tras la prueba
+@enduml

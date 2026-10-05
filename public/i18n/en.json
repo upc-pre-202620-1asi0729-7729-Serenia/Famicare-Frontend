@@ -1,0 +1,403 @@
+{
+  "app": {
+    "name": "FamiCare"
+  },
+  "common": {
+    "loading": "Loading…",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "viewAllDetails": "View all details"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again in a few seconds.",
+    "required": "This field is required.",
+    "email": "Enter a valid email.",
+    "phone": "Enter a valid phone number.",
+    "passwordMin": "At least 8 characters.",
+    "passwordMismatch": "Passwords don't match."
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} h ago",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "now": "Now"
+  },
+  "nav": {
+    "caption": "Your care space",
+    "main": "Main navigation",
+    "dashboard": "Home",
+    "location": "Location",
+    "safeZones": "Safe zones",
+    "alerts": "Alerts",
+    "careNetwork": "Care network",
+    "activity": "Activity",
+    "device": "Device",
+    "help": "Need help?",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "closeNav": "Close navigation",
+    "notifications": "View notifications"
+  },
+  "sidebar": {
+    "allGood": "All good",
+    "review": "Check on her"
+  },
+  "status": {
+    "safe": "{{name}} is safe",
+    "insideZone": "Inside a safe zone",
+    "attention": "{{name}} needs attention",
+    "reason": {
+      "OUTSIDE_ZONE": "Outside a safe zone",
+      "LOW_BATTERY": "Low bracelet battery",
+      "DISCONNECTED": "Bracelet is not connected"
+    }
+  },
+  "map": {
+    "home": "Home",
+    "live": "Live",
+    "description": "Illustrated map of the current location"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}"
+    },
+    "subtitle": "Here's a summary of how {{name}} is doing today.",
+    "location": {
+      "kicker": "Current location",
+      "viewMap": "View map",
+      "updated": "Updated {{time}}"
+    },
+    "device": {
+      "kicker": "Device",
+      "title": "{{name}}'s bracelet"
+    },
+    "alert": {
+      "pending": "Pending attention",
+      "handled": "Alert handled",
+      "thanks": "Thanks for confirming",
+      "updated": "The record has been updated.",
+      "markHandled": "Mark as handled",
+      "reopen": "Reopen",
+      "none": "Nothing pending",
+      "noneHint": "There are no alerts to handle."
+    },
+    "routine": {
+      "kicker": "Today's activity",
+      "title": "A quiet morning",
+      "viewReport": "View report"
+    },
+    "network": {
+      "kicker": "Shared care",
+      "title": "You're not alone",
+      "open": "Open care network",
+      "count": "{{count}} caregivers",
+      "shift": "{{name}} will be available until {{time}}"
+    }
+  },
+  "location": {
+    "eyebrow": "Live tracking",
+    "title": "{{name}}'s location",
+    "description": {
+      "inside": "The signal was updated {{time}} and remains within her usual area.",
+      "outside": "The signal was updated {{time}} and is outside the safe zones."
+    },
+    "lastRecord": "Last record",
+    "updated": "Updated",
+    "accuracy": "Accuracy",
+    "state": "Status",
+    "zone": "Zone",
+    "meters": "{{count}} meters",
+    "movement": {
+      "MOVING": "Moving",
+      "STILL": "Stationary"
+    },
+    "insideZone": "Inside a safe zone",
+    "outsideZone": "Outside a safe zone",
+    "viewHistory": "View history",
+    "hideHistory": "Hide history",
+    "refresh": "Refresh location",
+    "historyKicker": "Latest records",
+    "historyTitle": "Location history"
+  },
+  "safeZones": {
+    "eyebrow": "Geofences",
+    "title": "Safe zones",
+    "description": {
+      "none": "No trusted places yet. Create the first one to protect {{name}}'s routes.",
+      "one": "One trusted place protects {{name}}'s daily routes.",
+      "many": "{{count}} trusted places protect {{name}}'s daily routes."
+    },
+    "meta": "{{radius}} m radius",
+    "active": "Active",
+    "inactive": "Inactive",
+    "activate": "Activate zone",
+    "deactivate": "Deactivate zone",
+    "toggle": "Turn {{name}} on or off",
+    "remove": "Delete {{name}}",
+    "empty": "You don't have any safe zones yet.",
+    "create": "Create safe zone",
+    "types": {
+      "HOME": "Home",
+      "PARK": "Park",
+      "FAMILY": "Relative's home",
+      "CLINIC": "Health center",
+      "OTHER": "Other place"
+    },
+    "modal": {
+      "title": "New safe zone",
+      "subtitle": "Define a place where the family feels at ease.",
+      "name": "Name",
+      "namePlaceholder": "E.g. Diego's house",
+      "type": "Type",
+      "radius": "Radius",
+      "address": "Address (optional)",
+      "addressPlaceholder": "Street and district",
+      "submit": "Save zone"
+    }
+  },
+  "alerts": {
+    "eyebrow": "Alert center",
+    "heading": {
+      "clear": "Everything is under control",
+      "one": "You have 1 pending alert",
+      "many": "You have {{count}} pending alerts"
+    },
+    "description": "Review recent events and confirm which ones have been handled.",
+    "filters": {
+      "label": "Filter alerts",
+      "ALL": "All",
+      "PENDING": "Pending",
+      "HANDLED": "Handled"
+    },
+    "emptyTitle": "Everything is under control",
+    "empty": "There are no alerts in this view.",
+    "markHandled": "Mark as handled",
+    "reopen": "Reopen",
+    "handleAll": "Mark all as handled",
+    "view": "View details: {{title}}",
+    "backToCenter": "Back to alert center",
+    "notFound": "We couldn't find this alert.",
+    "status": {
+      "pending": "Pending attention",
+      "handled": "Handled"
+    },
+    "detail": {
+      "when": "When",
+      "origin": "Origin",
+      "state": "Status"
+    },
+    "origin": {
+      "pending": "Pending",
+      "handledBy": "Handled by {{name}}",
+      "AUTOMATIC": "Automatic",
+      "MANUAL": "Manual",
+      "TEST": "Monthly test"
+    },
+    "types": {
+      "LOW_BATTERY": {
+        "pending": "Low battery",
+        "handled": "Low battery resolved",
+        "description": "The bracelet has only {{battery}}% battery. It should be charged soon."
+      },
+      "BATTERY_RECHARGED": {
+        "pending": "Battery charged to {{battery}}%",
+        "handled": "Battery charged to {{battery}}%",
+        "description": "Yesterday's alert can now be closed."
+      },
+      "SAFE_ZONE_RETURN": {
+        "pending": "Back in a safe zone",
+        "handled": "Back in a safe zone",
+        "description": "She returned to a safe zone ({{zone}})."
+      },
+      "SAFE_ZONE_EXIT": {
+        "pending": "Left the safe zone",
+        "handled": "Safe zone exit handled",
+        "description": "She left {{zone}}."
+      },
+      "HELP_BUTTON_TEST": {
+        "pending": "Help button tested",
+        "handled": "Help button tested",
+        "description": "The bracelet's help button was verified to work."
+      },
+      "HELP_REQUEST": {
+        "pending": "Help request",
+        "handled": "Help request handled",
+        "description": "The bracelet's help button was pressed."
+      }
+    }
+  },
+  "careNetwork": {
+    "eyebrow": "Shared care",
+    "title": "Care network",
+    "description": {
+      "one": "One person is with {{name}} and can respond when she needs it most.",
+      "many": "{{count}} people are with {{name}} and can respond when she needs it most."
+    },
+    "roles": {
+      "PRIMARY": "Primary caregiver",
+      "COLLABORATOR": "Collaborator",
+      "PROFESSIONAL": "Professional caregiver"
+    },
+    "availability": {
+      "ONLINE": "Online",
+      "AVAILABLE": "Available",
+      "SCHEDULED": "On shift",
+      "INVITED": "Invitation sent"
+    },
+    "call": "Call {{name}}",
+    "remove": "Remove {{name}} from the network",
+    "invite": "Invite caregiver",
+    "modal": {
+      "title": "Invite caregiver",
+      "subtitle": "We'll send an invitation so they can look after {{name}}.",
+      "name": "Full name",
+      "email": "Email",
+      "role": "Role",
+      "submit": "Send invitation"
+    }
+  },
+  "activity": {
+    "eyebrow": "Weekly report",
+    "title": "Activity and routines",
+    "description": {
+      "stable": "{{name}} keeps a stable routine, with more activity in the mornings.",
+      "changed": "We detected changes in {{name}}'s routine this week."
+    },
+    "chartLabel": "Steps per day of the week",
+    "steps": "{{count}} steps",
+    "stepsShort": "{{count}} steps",
+    "stepsMeta": "Daily average · {{change}}% this week",
+    "outings": "{{count}} outings",
+    "outingsAllSafe": "All inside safe zones",
+    "outingsSome": "{{inside}} of {{total}} inside safe zones",
+    "routineStable": "Stable routine",
+    "routineStableMeta": "No unusual periods of inactivity",
+    "routineChanged": "Routine changed",
+    "routineChangedMeta": "Review the schedule of the last few days",
+    "hideDetails": "Hide details",
+    "detailKicker": "This week",
+    "detailTitle": "Steps per day",
+    "events": {
+      "LEFT_HOME": {
+        "title": "Left home",
+        "description": "Start of usual route"
+      },
+      "ARRIVED_PARK": {
+        "title": "Arrived at the park",
+        "description": "Inside a safe zone"
+      },
+      "WALKING_PARK": {
+        "title": "Walk in the park",
+        "description": "Normal activity"
+      }
+    }
+  },
+  "device": {
+    "eyebrow": "Linked bracelet",
+    "title": "{{name}}'s device",
+    "description": {
+      "connected": "The bracelet is connected, with good GPS signal and enough battery.",
+      "disconnected": "The bracelet is not connected. Check that it's on and near a phone."
+    },
+    "connected": "Connected",
+    "disconnected": "Offline",
+    "daysLeft": "{{count}} days left",
+    "lastSignal": "Last signal {{time}}",
+    "battery": "{{percent}}% battery",
+    "autonomy": "Estimated autonomy of {{count}} days",
+    "gps": {
+      "HIGH": "Precise GPS",
+      "MEDIUM": "Fair GPS",
+      "LOW": "Weak GPS"
+    },
+    "signal": {
+      "HIGH": "high",
+      "MEDIUM": "medium",
+      "LOW": "low"
+    },
+    "gpsMeta": "{{signal}} signal · {{meters}} meter margin",
+    "hideDetails": "Hide details",
+    "detailKicker": "Technical details",
+    "serial": "Serial number",
+    "firmware": "Firmware",
+    "lastTest": "Last help button test",
+    "never": "Never",
+    "sync": "Sync now",
+    "testHelp": "Test help button"
+  },
+  "profile": {
+    "eyebrow": "My account",
+    "title": "Your profile",
+    "description": "Update your details and review your subscription.",
+    "roles": {
+      "PRIMARY_CAREGIVER": "Primary caregiver"
+    },
+    "menu": {
+      "account": "My account",
+      "subscription": "Subscription",
+      "logout": "Sign out"
+    },
+    "save": "Save changes",
+    "saved": "Your details were updated.",
+    "plan": {
+      "active": "Active",
+      "FAMILY": {
+        "name": "Family plan"
+      },
+      "features": {
+        "seniors": "Monitoring for one older adult",
+        "caregivers": "Shared care network",
+        "history": "Location and alert history",
+        "support": "Email support"
+      }
+    }
+  },
+  "auth": {
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "fullName": "Full name",
+      "phone": "Phone"
+    },
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to see how your loved one is doing.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "forgot": "Forgot your password?",
+      "noAccount": "Don't have an account yet?",
+      "register": "Sign up"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Caring together starts with a first step.",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "login": "Sign in"
+    },
+    "forgot": {
+      "title": "Recover your access",
+      "subtitle": "We'll email you a link to create a new password.",
+      "submit": "Send link",
+      "back": "Back to sign in",
+      "sent": "If the email is registered, you'll receive a link in a few minutes."
+    },
+    "demo": {
+      "title": "Demo account",
+      "use": "Use these details"
+    },
+    "errors": {
+      "INVALID_CREDENTIALS": "Incorrect email or password.",
+      "EMAIL_TAKEN": "An account with this email already exists."
+    }
+  }
+}

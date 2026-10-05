@@ -1,0 +1,38 @@
+<aside class="sidebar" [class.is-open]="open" id="app-sidebar">
+  <div class="brand-sticker">
+    <img src="famicare-logo.jpg" alt="FamiCare" />
+  </div>
+
+  <button type="button" class="mobile-close" (click)="closed.emit()" [attr.aria-label]="'nav.closeMenu' | translate">
+    <app-icon name="close" />
+  </button>
+
+  <p class="nav-caption">{{ 'nav.caption' | translate }}</p>
+
+  <nav [attr.aria-label]="'nav.main' | translate">
+    @for (item of navItems; track item.path) {
+      <a [routerLink]="item.path" routerLinkActive="active" (click)="closed.emit()">
+        <app-icon [name]="item.icon" />
+        <span>{{ item.labelKey | translate }}</span>
+        @if (item.badge && pendingCount() > 0) {
+          <small>{{ pendingCount() }}</small>
+        }
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar-note" [class.sidebar-note--attention]="!allClear()">
+    <app-icon [name]="allClear() ? 'shield' : 'warning'" [size]="28" />
+    @if (senior(); as s) {
+      <p>
+        @if (allClear()) {
+          <strong>{{ 'sidebar.allGood' | translate }}</strong><br />{{ 'status.safe' | translate: { name: s.firstName } }}
+        } @else {
+          <strong>{{ 'sidebar.review' | translate }}</strong><br />{{ 'status.attention' | translate: { name: s.firstName } }}
+        }
+      </p>
+    }
+  </div>
+
+  <a class="support-link" href="mailto:soporte@famicare.app">{{ 'nav.help' | translate }}</a>
+</aside>

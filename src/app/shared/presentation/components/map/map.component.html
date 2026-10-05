@@ -1,0 +1,30 @@
+<div class="map-board" [class.map-board--compact]="compact()">
+  <svg
+    class="map-lines"
+    preserveAspectRatio="none"
+    role="img"
+    viewBox="0 0 800 420"
+    [attr.aria-label]="description() || ('map.description' | translate)"
+  >
+    <path d="M-20 125C115 90 170 180 286 138s190-73 300-12 190 16 250-22" />
+    <path d="M70-20c55 76 24 130 92 180s112 72 92 130-3 98 35 150" />
+    <path d="M390-10c-30 90 17 124-12 200s-2 132 40 250" />
+    <path d="M655-10c-42 62-19 128-82 174s-61 152-33 276" />
+    <path d="M-20 315c105-48 205-5 298-25s206-63 298-8 170 43 250 7" />
+    <path class="route" d="M126 310c25-43 42-96 90-105s68 35 119 13 82-61 133-56" />
+    <circle cx="126" cy="310" r="8" />
+    <circle cx="468" cy="162" r="8" />
+  </svg>
+  <div class="safe-zone"></div>
+  <div class="map-pin"><span>{{ initials() }}</span></div>
+  @if (zoneLabel()) {
+    <div class="map-label map-label--park">{{ zoneLabel() }}</div>
+  }
+  @if (homeLabel()) {
+    <div class="map-label map-label--home"><app-icon name="home" [size]="13" /> {{ homeLabel() }}</div>
+  }
+  @if (!compact()) {
+    <div class="map-compass">N</div>
+    <div class="map-live"><span class="live-dot"></span>{{ 'map.live' | translate }}</div>
+  }
+</div>

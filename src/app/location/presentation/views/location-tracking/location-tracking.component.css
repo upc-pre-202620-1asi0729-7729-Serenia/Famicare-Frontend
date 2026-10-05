@@ -1,0 +1,12 @@
+:host { display: block; }
+
+.route-summary { align-self: stretch; padding: 24px; }
+
+.route-summary h3 { margin: 2px 0; color: var(--cream); font-family: var(--font-hand); font-size: 22px; }
+.route-summary > p:not(.kicker) { margin: 0; color: var(--muted); font-size: 11px; }
+.route-summary .rule { margin: 25px 0 15px; }
+
+.history-card { margin-top: 20px; padding: 20px 24px 8px; }
+.history-card .card-heading { margin-bottom: 6px; }
+
+.ghost-button app-icon { display: inline-flex; }

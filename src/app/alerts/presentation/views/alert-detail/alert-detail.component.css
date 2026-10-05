@@ -1,0 +1,11 @@
+:host { display: block; }
+
+.back-link { display: inline-flex; margin-bottom: 18px; text-decoration: none; }
+.flip { transform: rotate(180deg); }
+
+.detail-card { max-width: 640px; padding: 24px; }
+
+.detail-head { display: flex; align-items: center; gap: 16px; }
+.detail-head p { margin: 0; color: var(--cream); font-size: 14px; line-height: 1.55; }
+
+.detail-card .rule { margin: 22px 0 10px; }

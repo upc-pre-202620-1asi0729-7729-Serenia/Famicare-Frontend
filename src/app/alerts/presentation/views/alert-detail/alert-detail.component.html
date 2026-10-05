@@ -1,0 +1,33 @@
+<a routerLink="/alerts" class="card-link back-link"><app-icon name="arrow" [size]="16" class="flip" /> {{ 'alerts.backToCenter' | translate }}</a>
+
+@if (alert(); as a) {
+  <app-page-heading
+    [eyebrow]="'alerts.eyebrow' | translate"
+    [title]="titleKey(a) | translate: a.params"
+    [description]="(a.isPending ? 'alerts.status.pending' : 'alerts.status.handled') | translate"
+  />
+
+  <article class="chalk-card detail-card">
+    <div class="detail-head">
+      <span class="list-icon" [class.list-icon--coral]="a.isPending"><app-icon [name]="a.icon" /></span>
+      <p>{{ descriptionKey(a) | translate: a.params }}</p>
+    </div>
+
+    <div class="rule"></div>
+    <div class="route-stat"><span>{{ 'alerts.detail.when' | translate }}</span><strong>{{ a.occurredAt | dayTime }}</strong></div>
+    <div class="route-stat"><span>{{ 'alerts.detail.origin' | translate }}</span><strong>{{ origin(a).key | translate: origin(a).params }}</strong></div>
+    <div class="route-stat">
+      <span>{{ 'alerts.detail.state' | translate }}</span>
+      <strong [class.mint]="!a.isPending">{{ (a.isPending ? 'alerts.status.pending' : 'alerts.status.handled') | translate }}</strong>
+    </div>
+
+    <button type="button" class="coral-button" (click)="a.isPending ? store.handle(a) : store.reopen(a)">
+      {{ (a.isPending ? 'alerts.markHandled' : 'alerts.reopen') | translate }}
+    </button>
+  </article>
+} @else {
+  <div class="chalk-card state">
+    <app-icon name="bell" [size]="34" />
+    <p>{{ (store.loading() ? 'common.loading' : 'alerts.notFound') | translate }}</p>
+  </div>
+}

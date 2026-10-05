@@ -1,0 +1,53 @@
+<main class="auth-page">
+  <div class="auth-lang"><app-language-switcher></app-language-switcher></div>
+
+  <section class="auth-card auth-card--wide">
+    <span class="auth-brand"><img src="famicare-logo.jpg" alt="FamiCare" /></span>
+    <h1>{{ 'auth.register.title' | translate }}</h1>
+    <p class="auth-sub">{{ 'auth.register.subtitle' | translate }}</p>
+
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-grid">
+        <div class="field field--full" [class.field--invalid]="invalid('fullName')">
+          <label for="reg-name">{{ 'auth.fields.fullName' | translate }}</label>
+          <input id="reg-name" type="text" formControlName="fullName" autocomplete="name" maxlength="80" />
+          @if (invalid('fullName')) { <p class="field__error">{{ 'errors.required' | translate }}</p> }
+        </div>
+
+        <div class="field" [class.field--invalid]="invalid('email')">
+          <label for="reg-email">{{ 'auth.fields.email' | translate }}</label>
+          <input id="reg-email" type="email" formControlName="email" autocomplete="email" />
+          @if (invalid('email')) { <p class="field__error">{{ 'errors.email' | translate }}</p> }
+        </div>
+
+        <div class="field" [class.field--invalid]="invalid('phone')">
+          <label for="reg-phone">{{ 'auth.fields.phone' | translate }}</label>
+          <input id="reg-phone" type="tel" formControlName="phone" autocomplete="tel" />
+          @if (invalid('phone')) { <p class="field__error">{{ 'errors.phone' | translate }}</p> }
+        </div>
+
+        <div class="field" [class.field--invalid]="invalid('password')">
+          <label for="reg-password">{{ 'auth.fields.password' | translate }}</label>
+          <input id="reg-password" type="password" formControlName="password" autocomplete="new-password" />
+          @if (invalid('password')) { <p class="field__error">{{ 'errors.passwordMin' | translate }}</p> }
+        </div>
+
+        <div class="field" [class.field--invalid]="invalid('confirm') || mismatch">
+          <label for="reg-confirm">{{ 'auth.fields.confirmPassword' | translate }}</label>
+          <input id="reg-confirm" type="password" formControlName="confirm" autocomplete="new-password" />
+          @if (mismatch) { <p class="field__error">{{ 'errors.passwordMismatch' | translate }}</p> }
+        </div>
+      </div>
+
+      @if (errorKey()) { <p class="form-error" role="alert">{{ errorKey()! | translate }}</p> }
+
+      <button type="submit" class="coral-button" [disabled]="loading()">
+        {{ (loading() ? 'auth.register.submitting' : 'auth.register.submit') | translate }}
+      </button>
+    </form>
+
+    <div class="auth-links auth-links--center">
+      <span>{{ 'auth.register.haveAccount' | translate }} <a routerLink="/login">{{ 'auth.register.login' | translate }}</a></span>
+    </div>
+  </section>
+</main>

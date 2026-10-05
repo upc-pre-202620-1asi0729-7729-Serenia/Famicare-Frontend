@@ -1,0 +1,54 @@
+@startuml alerts
+title Bounded context: alerts
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class CareAlert {
+  + id: number
+  + type: AlertType
+  + occurredAt: string
+  + status: AlertStatus
+  + handledBy: string | null
+  + origin: AlertOrigin
+  + params: AlertParams
+  }
+}
+
+package "infrastructure" {
+  class AlertResource <<interface>>
+  class AlertsAssembler {
+    + toEntityFromResource(r): CareAlert
+    + toResourceFromEntity(e): AlertResource
+    + toEntitiesFromResponse(list): CareAlert[]
+  }
+  class AlertsApi {
+  + getAlerts()
+  + handleAlert(id)
+  + reopenAlert(id)
+  }
+  class "AlertsApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class AlertsStore <<Injectable>> {
+  + alerts: Signal<CareAlert[]>
+  + pendingCount: Signal<number>
+  + filtered: Signal<CareAlert[]>
+  + spotlight: Signal<CareAlert | null>
+  + handle(alert): void
+  + reopen(alert): void
+  + handleAll(): void
+  }
+}
+
+AlertsApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+AlertsAssembler ..|> BaseAssembler
+CareAlert ..|> BaseEntity
+AlertsApi *-- Endpoint
+Endpoint --> AlertsAssembler
+AlertsAssembler ..> AlertResource
+AlertsStore --> AlertsApi
+AlertsStore o-- CareAlert
+
+@enduml

@@ -1,0 +1,45 @@
+<main class="auth-page">
+  <div class="auth-lang"><app-language-switcher></app-language-switcher></div>
+
+  <section class="auth-card">
+    <span class="auth-brand"><img src="famicare-logo.jpg" alt="FamiCare" /></span>
+    <h1>{{ 'auth.login.title' | translate }}</h1>
+    <p class="auth-sub">{{ 'auth.login.subtitle' | translate }}</p>
+
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field" [class.field--invalid]="invalid('email')">
+        <label for="login-email">{{ 'auth.fields.email' | translate }}</label>
+        <input id="login-email" type="email" formControlName="email" autocomplete="email" [placeholder]="'auth.fields.emailPlaceholder' | translate" />
+        @if (invalid('email')) { <p class="field__error">{{ 'errors.email' | translate }}</p> }
+      </div>
+
+      <div class="field" [class.field--invalid]="invalid('password')">
+        <label for="login-password">{{ 'auth.fields.password' | translate }}</label>
+        <div class="password-wrap">
+          <input id="login-password" [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" />
+          <button type="button" class="password-toggle" (click)="showPassword.set(!showPassword())" [attr.aria-label]="(showPassword() ? 'auth.hidePassword' : 'auth.showPassword') | translate" [attr.aria-pressed]="showPassword()">
+            <app-icon name="eye" [size]="18" />
+          </button>
+        </div>
+        @if (invalid('password')) { <p class="field__error">{{ 'errors.required' | translate }}</p> }
+      </div>
+
+      @if (errorKey()) { <p class="form-error" role="alert">{{ errorKey()! | translate }}</p> }
+
+      <button type="submit" class="coral-button" [disabled]="loading()">
+        {{ (loading() ? 'auth.login.submitting' : 'auth.login.submit') | translate }}
+      </button>
+    </form>
+
+    <div class="auth-links">
+      <a routerLink="/forgot-password">{{ 'auth.login.forgot' | translate }}</a>
+      <span>{{ 'auth.login.noAccount' | translate }} <a routerLink="/register">{{ 'auth.login.register' | translate }}</a></span>
+    </div>
+
+    <div class="auth-demo">
+      <strong>{{ 'auth.demo.title' | translate }}</strong>
+      <code>{{ demo.email }}</code> · <code>{{ demo.password }}</code><br />
+      <button type="button" (click)="useDemo()">{{ 'auth.demo.use' | translate }}</button>
+    </div>
+  </section>
+</main>

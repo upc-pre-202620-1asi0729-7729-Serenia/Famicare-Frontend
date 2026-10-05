@@ -1,0 +1,68 @@
+@if (store.current(); as loc) {
+  <app-page-heading
+    [eyebrow]="'location.eyebrow' | translate"
+    [title]="'location.title' | translate: { name: senior()?.firstName ?? '' }"
+    [description]="descriptionKey() | translate: { time: (loc.recordedAt | relativeTime) }"
+  />
+
+  <section class="feature-layout">
+    <app-map-board
+      [initials]="senior()?.initials ?? ''"
+      [zoneLabel]="loc.insideSafeZone ? loc.placeName : ''"
+      [homeLabel]="'map.home' | translate"
+    />
+
+    <div class="chalk-card route-summary">
+      <p class="kicker">{{ 'location.lastRecord' | translate }}</p>
+      <h3>{{ loc.address }}</h3>
+      <p>{{ loc.district }}</p>
+      <div class="rule"></div>
+      <div class="route-stat"><span>{{ 'location.updated' | translate }}</span><strong>{{ loc.recordedAt | relativeTime }}</strong></div>
+      <div class="route-stat"><span>{{ 'location.accuracy' | translate }}</span><strong>{{ 'location.meters' | translate: { count: loc.accuracyMeters } }}</strong></div>
+      <div class="route-stat">
+        <span>{{ 'location.state' | translate }}</span>
+        <strong [class.mint]="loc.insideSafeZone">{{ 'location.movement.' + loc.movementState | translate }}</strong>
+      </div>
+      <div class="route-stat">
+        <span>{{ 'location.zone' | translate }}</span>
+        <strong [class.mint]="loc.insideSafeZone">{{ (loc.insideSafeZone ? 'location.insideZone' : 'location.outsideZone') | translate }}</strong>
+      </div>
+
+      <button type="button" class="coral-button" (click)="toggleHistory()" [attr.aria-expanded]="showHistory()">
+        {{ (showHistory() ? 'location.hideHistory' : 'location.viewHistory') | translate }} <app-icon name="arrow" [size]="17" />
+      </button>
+      <button type="button" class="ghost-button" (click)="store.refresh()" [disabled]="store.refreshing()">
+        <app-icon name="refresh" [size]="16" [class.spin]="store.refreshing()" />
+        {{ 'location.refresh' | translate }}
+      </button>
+    </div>
+  </section>
+
+  @if (showHistory()) {
+    <section class="chalk-card history-card">
+      <div class="card-heading">
+        <div>
+          <p class="kicker">{{ 'location.historyKicker' | translate }}</p>
+          <h2>{{ 'location.historyTitle' | translate }}</h2>
+        </div>
+      </div>
+
+      @for (record of store.history(); track record.id) {
+        <article class="list-row">
+          <span class="list-icon" [class.list-icon--coral]="!record.insideSafeZone">
+            <app-icon [name]="record.insideSafeZone ? 'home' : 'location'" />
+          </span>
+          <div>
+            <h3>{{ record.placeName }}</h3>
+            <p>{{ record.recordedAt | dayTime }} · {{ record.address }}</p>
+          </div>
+          <span class="online-pill" [class.online-pill--warn]="record.isMoving">{{ 'location.movement.' + record.movementState | translate }}</span>
+        </article>
+      } @empty {
+        <div class="state"><p>{{ 'common.loading' | translate }}</p></div>
+      }
+    </section>
+  }
+} @else {
+  <div class="state"><app-icon name="location" [size]="34" /><p>{{ 'common.loading' | translate }}</p></div>
+}

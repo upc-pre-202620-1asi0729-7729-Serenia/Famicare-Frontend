@@ -1,0 +1,17 @@
+@startuml dashboard
+title Bounded context: dashboard (vista de conjunto)
+class DashboardStore <<Injectable>> {
+  + senior: Signal<Senior | null>
+  + attentionReason: Signal<AttentionReason>
+  + status: Signal<'LOADING' | 'SAFE' | 'ATTENTION'>
+  + dayPart(date?): 'morning' | 'afternoon' | 'evening'
+}
+DashboardStore --> SeniorStore
+DashboardStore --> LocationStore
+DashboardStore --> DeviceStore
+DashboardStore --> AlertsStore
+DashboardStore --> ActivityStore
+DashboardStore --> CareNetworkStore
+class DashboardComponent
+DashboardComponent --> DashboardStore
+@enduml

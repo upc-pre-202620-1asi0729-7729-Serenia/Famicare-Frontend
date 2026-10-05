@@ -1,0 +1,82 @@
+<app-page-heading
+  [eyebrow]="'device.eyebrow' | translate"
+  [title]="'device.title' | translate: { name: senior()?.firstName ?? '' }"
+  [description]="(store.bracelet()?.connected ? 'device.description.connected' : 'device.description.disconnected') | translate"
+/>
+
+@if (store.bracelet(); as dev) {
+  <section class="module-board">
+    <div class="module-visual">
+      <div class="module-mark module-mark--device">
+        <app-icon name="device" [size]="72" />
+        <span class="orbit orbit--one"></span>
+        <span class="orbit orbit--two"></span>
+      </div>
+    </div>
+
+    <div class="module-list">
+      <article class="list-row">
+        <span class="list-icon"><app-icon name="device" /></span>
+        <div>
+          <h3>{{ dev.model }}</h3>
+          <p>{{ (dev.connected ? 'device.connected' : 'device.disconnected') | translate }} · {{ 'device.lastSignal' | translate: { time: (dev.lastSignalAt | relativeTime) } }}</p>
+        </div>
+      </article>
+
+      <article class="list-row">
+        <span class="list-icon" [class.list-icon--coral]="dev.lowBattery"><app-icon name="battery" /></span>
+        <div>
+          <h3>{{ 'device.battery' | translate: { percent: dev.batteryPercent } }}</h3>
+          <p>{{ 'device.autonomy' | translate: { count: dev.estimatedDaysLeft } }}</p>
+        </div>
+      </article>
+
+      <article class="list-row">
+        <span class="list-icon"><app-icon name="location" /></span>
+        <div>
+          <h3>{{ 'device.gps.' + dev.gpsSignal | translate }}</h3>
+          <p>{{ 'device.gpsMeta' | translate: { signal: ('device.signal.' + dev.gpsSignal | translate), meters: dev.gpsAccuracyMeters } }}</p>
+        </div>
+      </article>
+
+      <button type="button" class="coral-button" (click)="showDetails.set(!showDetails())" [attr.aria-expanded]="showDetails()">
+        {{ (showDetails() ? 'device.hideDetails' : 'common.viewAllDetails') | translate }} <app-icon name="arrow" [size]="17" />
+      </button>
+    </div>
+  </section>
+
+  @if (showDetails()) {
+    <section class="chalk-card detail-card">
+      <div class="card-heading">
+        <div>
+          <p class="kicker">{{ 'device.detailKicker' | translate }}</p>
+          <h2>{{ dev.model }}</h2>
+        </div>
+        <span class="online-pill" [class.online-pill--off]="!dev.connected">{{ (dev.connected ? 'device.connected' : 'device.disconnected') | translate }}</span>
+      </div>
+
+      <div class="rule"></div>
+      <div class="route-stat"><span>{{ 'device.serial' | translate }}</span><strong>{{ dev.serialNumber }}</strong></div>
+      <div class="route-stat"><span>{{ 'device.firmware' | translate }}</span><strong>v{{ dev.firmwareVersion }}</strong></div>
+      <div class="route-stat"><span>{{ 'device.lastTest' | translate }}</span><strong>{{ dev.lastHelpTestAt ? (dev.lastHelpTestAt | dayTime) : ('device.never' | translate) }}</strong></div>
+
+      <div class="actions">
+        <button type="button" class="ghost-button" (click)="store.sync()" [disabled]="store.syncing()">
+          <app-icon name="refresh" [size]="16" [class.spin]="store.syncing()" /> {{ 'device.sync' | translate }}
+        </button>
+        <button type="button" class="ghost-button" (click)="store.testHelpButton()" [disabled]="store.testing()">
+          <app-icon name="bell" [size]="16" /> {{ 'device.testHelp' | translate }}
+        </button>
+      </div>
+    </section>
+  }
+} @else {
+  <div class="state">
+    @if (store.error()) {
+      <p class="form-error">{{ 'errors.generic' | translate }}</p>
+      <button type="button" class="ghost-button ghost-button--inline" (click)="store.load()">{{ 'common.retry' | translate }}</button>
+    } @else {
+      <p>{{ 'common.loading' | translate }}</p>
+    }
+  </div>
+}

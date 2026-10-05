@@ -1,0 +1,61 @@
+<app-page-heading
+  [eyebrow]="'alerts.eyebrow' | translate"
+  [title]="headingKey() | translate: { count: store.pendingCount() }"
+  [description]="'alerts.description' | translate"
+/>
+
+<section class="module-board">
+  <div class="module-visual">
+    <div class="module-mark module-mark--alerts">
+      <app-icon name="bell" [size]="72" />
+      <span class="orbit orbit--one"></span>
+      <span class="orbit orbit--two"></span>
+    </div>
+  </div>
+
+  <div class="module-list">
+    <div class="chip-row" role="tablist" [attr.aria-label]="'alerts.filters.label' | translate">
+      @for (f of filters; track f) {
+        <button type="button" class="chip" role="tab" [class.is-active]="store.filter() === f" [attr.aria-selected]="store.filter() === f" (click)="store.setFilter(f)">
+          {{ 'alerts.filters.' + f | translate }}
+        </button>
+      }
+    </div>
+
+    @if (store.loading()) {
+      <div class="state"><p>{{ 'common.loading' | translate }}</p></div>
+    } @else if (store.error()) {
+      <div class="state"><p class="form-error">{{ 'errors.generic' | translate }}</p><button type="button" class="ghost-button ghost-button--inline" (click)="store.load()">{{ 'common.retry' | translate }}</button></div>
+    }
+
+    @for (alert of store.filtered(); track alert.id) {
+      <article class="list-row">
+        <span class="list-icon" [class.list-icon--coral]="alert.isPending"><app-icon [name]="alert.icon" /></span>
+        <div>
+          <h3>{{ titleKeyFn(alert) | translate: alert.params }}</h3>
+          <p>
+            {{ alert.occurredAt | dayTime }} · {{ originFn(alert).key | translate: originFn(alert).params }}
+          </p>
+        </div>
+        <div class="list-row__actions">
+          <button type="button" class="text-action" [class.text-action--coral]="alert.isPending" (click)="toggle(alert)">
+            {{ (alert.isPending ? 'alerts.markHandled' : 'alerts.reopen') | translate }}
+          </button>
+          <a class="icon-button" [routerLink]="['/alerts', alert.id]" [attr.aria-label]="'alerts.view' | translate: { title: (titleKeyFn(alert) | translate: alert.params) }">
+            <app-icon name="arrow" [size]="16" />
+          </a>
+        </div>
+      </article>
+    } @empty {
+      @if (!store.loading() && !store.error()) {
+        <div class="state"><app-icon name="check" [size]="34" /><p>{{ 'alerts.empty' | translate }}</p></div>
+      }
+    }
+
+    @if (store.pendingCount() > 0) {
+      <button type="button" class="coral-button" (click)="store.handleAll()">
+        {{ 'alerts.handleAll' | translate }} <app-icon name="check" [size]="17" />
+      </button>
+    }
+  </div>
+</section>

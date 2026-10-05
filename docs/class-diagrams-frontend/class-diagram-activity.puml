@@ -1,0 +1,57 @@
+@startuml activity
+title Bounded context: activity
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class ActivityReport {
+  + id: number
+  + weekStart: string
+  + dailySteps: number[]
+  + averageSteps: number
+  + weeklyChangePercent: number
+  + outings: number
+  + outingsInsideSafeZones: number
+  + routineStable: boolean
+  }
+}
+
+package "infrastructure" {
+  class ActivityReportResource <<interface>>
+  class ActivityReportAssembler {
+    + toEntityFromResource(r): ActivityReport
+    + toResourceFromEntity(e): ActivityReportResource
+    + toEntitiesFromResponse(list): ActivityReport[]
+  }
+  class ActivityApi {
+  + getWeeklyReport()
+  + getTodayRoutine()
+  }
+  class "ActivityApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class ActivityStore <<Injectable>> {
+  + report: Signal<ActivityReport | null>
+  + today: Signal<RoutineEvent[]>
+  + days: Signal<DayActivity[]>
+  + load(): void
+  }
+}
+
+ActivityApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+ActivityReportAssembler ..|> BaseAssembler
+ActivityReport ..|> BaseEntity
+ActivityApi *-- Endpoint
+Endpoint --> ActivityReportAssembler
+ActivityReportAssembler ..> ActivityReportResource
+ActivityStore --> ActivityApi
+ActivityStore o-- ActivityReport
+class RoutineEvent {
+  + id: number
+  + time: string
+  + type: RoutineEventType
+  + state: RoutineEventState
+}
+ActivityStore --> RoutineEvent
+@enduml

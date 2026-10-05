@@ -1,0 +1,85 @@
+<app-page-heading
+  [eyebrow]="'careNetwork.eyebrow' | translate"
+  [title]="'careNetwork.title' | translate"
+  [description]="descriptionKey() | translate: { count: store.activeCount(), name: senior()?.firstName ?? '' }"
+/>
+
+<section class="module-board">
+  <div class="module-visual">
+    <div class="module-mark module-mark--network">
+      <app-icon name="people" [size]="72" />
+      <span class="orbit orbit--one"></span>
+      <span class="orbit orbit--two"></span>
+    </div>
+  </div>
+
+  <div class="module-list">
+    @if (store.loading()) {
+      <div class="state"><p>{{ 'common.loading' | translate }}</p></div>
+    } @else if (store.error()) {
+      <div class="state"><p class="form-error">{{ 'errors.generic' | translate }}</p><button type="button" class="ghost-button ghost-button--inline" (click)="store.load()">{{ 'common.retry' | translate }}</button></div>
+    }
+
+    @for (c of store.caregivers(); track c.id) {
+      <article class="list-row">
+        <span class="care-avatar" [class.coral]="c.tone === 'coral'" [class.yellow]="c.tone === 'yellow'" [class.mint-bg]="c.tone === 'mint'" [class.is-invited]="c.availability === 'INVITED'">{{ c.initials }}</span>
+        <div>
+          <h3>{{ c.fullName }}</h3>
+          <p>
+            {{ 'careNetwork.roles.' + c.kind | translate }} ·
+            @if (isShiftBased(c)) { {{ shift(c) }} } @else { {{ availabilityKey(c) | translate }} }
+          </p>
+        </div>
+        <div class="list-row__actions">
+          @if (c.phone) {
+            <a class="icon-button" [href]="'tel:' + c.phone" [attr.aria-label]="'careNetwork.call' | translate: { name: c.fullName }"><app-icon name="phone" [size]="16" /></a>
+          }
+          @if (!c.isPrimary) {
+            <button type="button" class="icon-button icon-button--danger" (click)="store.remove(c)" [attr.aria-label]="'careNetwork.remove' | translate: { name: c.fullName }"><app-icon name="trash" [size]="16" /></button>
+          }
+        </div>
+      </article>
+    }
+
+    <button type="button" class="coral-button" (click)="openModal()">
+      {{ 'careNetwork.invite' | translate }} <app-icon name="arrow" [size]="17" />
+    </button>
+  </div>
+</section>
+
+@if (modalOpen()) {
+  <div class="modal-backdrop" (click)="closeModal()">
+    <form class="modal" [formGroup]="form" (ngSubmit)="submit()" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="invite-title" novalidate>
+      <h2 id="invite-title">{{ 'careNetwork.modal.title' | translate }}</h2>
+      <p class="modal__sub">{{ 'careNetwork.modal.subtitle' | translate: { name: senior()?.firstName ?? '' } }}</p>
+
+      <div class="form-grid">
+        <div class="field field--full" [class.field--invalid]="invalid('fullName')">
+          <label for="inv-name">{{ 'careNetwork.modal.name' | translate }}</label>
+          <input id="inv-name" type="text" formControlName="fullName" autocomplete="name" maxlength="80" />
+          @if (invalid('fullName')) { <p class="field__error">{{ 'errors.required' | translate }}</p> }
+        </div>
+
+        <div class="field field--full" [class.field--invalid]="invalid('email')">
+          <label for="inv-email">{{ 'careNetwork.modal.email' | translate }}</label>
+          <input id="inv-email" type="email" formControlName="email" autocomplete="email" />
+          @if (invalid('email')) { <p class="field__error">{{ 'errors.email' | translate }}</p> }
+        </div>
+
+        <div class="field field--full">
+          <label for="inv-kind">{{ 'careNetwork.modal.role' | translate }}</label>
+          <select id="inv-kind" formControlName="kind">
+            @for (k of kinds; track k) { <option [value]="k">{{ 'careNetwork.roles.' + k | translate }}</option> }
+          </select>
+        </div>
+      </div>
+
+      @if (store.error()) { <p class="form-error mt">{{ 'errors.generic' | translate }}</p> }
+
+      <div class="modal__actions">
+        <button type="button" class="ghost-button" (click)="closeModal()">{{ 'common.cancel' | translate }}</button>
+        <button type="submit" class="coral-button" [disabled]="store.saving()">{{ 'careNetwork.modal.submit' | translate }}</button>
+      </div>
+    </form>
+  </div>
+}

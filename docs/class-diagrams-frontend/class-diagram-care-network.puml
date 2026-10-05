@@ -1,0 +1,54 @@
+@startuml care-network
+title Bounded context: care-network
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class Caregiver {
+  + id: number
+  + fullName: string
+  + initials: string
+  + kind: CaregiverKind
+  + availability: CaregiverAvailability
+  + shiftStart: string | null
+  + shiftEnd: string | null
+  + phone: string
+  + email: string
+  }
+}
+
+package "infrastructure" {
+  class CaregiverResource <<interface>>
+  class CaregiverAssembler {
+    + toEntityFromResource(r): Caregiver
+    + toResourceFromEntity(e): CaregiverResource
+    + toEntitiesFromResponse(list): Caregiver[]
+  }
+  class CaregiverApi {
+  + getCaregivers()
+  + inviteCaregiver(entity)
+  + removeCaregiver(id)
+  }
+  class "CaregiverApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class CareNetworkStore <<Injectable>> {
+  + caregivers: Signal<Caregiver[]>
+  + activeCount: Signal<number>
+  + onShift: Signal<Caregiver | null>
+  + invite(props, onDone?): void
+  + remove(caregiver): void
+  }
+}
+
+CaregiverApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+CaregiverAssembler ..|> BaseAssembler
+Caregiver ..|> BaseEntity
+CaregiverApi *-- Endpoint
+Endpoint --> CaregiverAssembler
+CaregiverAssembler ..> CaregiverResource
+CareNetworkStore --> CaregiverApi
+CareNetworkStore o-- Caregiver
+
+@enduml

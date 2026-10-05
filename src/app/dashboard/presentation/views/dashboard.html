@@ -1,0 +1,137 @@
+<app-page-heading
+  [eyebrow]="eyebrow()"
+  [title]="('dashboard.greeting.' + store.dayPart()) | translate: { name: userName() }"
+  [description]="store.senior() ? ('dashboard.subtitle' | translate: { name: store.senior()!.firstName }) : ''"
+/>
+
+<section class="dashboard-grid">
+  <!-- Ubicación actual -->
+  <article class="chalk-card location-card">
+    @if (store.location.current(); as loc) {
+      <div class="card-heading">
+        <div>
+          <p class="kicker">{{ 'dashboard.location.kicker' | translate }}</p>
+          <h2>{{ loc.placeName }}</h2>
+        </div>
+        <button type="button" routerLink="/location">{{ 'dashboard.location.viewMap' | translate }} <app-icon name="arrow" [size]="16" /></button>
+      </div>
+
+      <app-map-board
+        [compact]="true"
+        [initials]="store.senior()?.initials ?? ''"
+        [zoneLabel]="loc.insideSafeZone ? loc.placeName : ''"
+        [homeLabel]="'map.home' | translate"
+      />
+
+      <div class="location-footer">
+        <span><span class="live-dot"></span> {{ 'dashboard.location.updated' | translate: { time: (loc.recordedAt | relativeTime) } }}</span>
+        <strong>{{ shortAddress(loc.address, loc.district) }}</strong>
+      </div>
+    } @else {
+      <div class="state"><app-icon name="location" [size]="30" /><p>{{ 'common.loading' | translate }}</p></div>
+    }
+  </article>
+
+  <div class="status-column">
+    <!-- Dispositivo -->
+    <article class="chalk-card device-card">
+      @if (store.device.bracelet(); as dev) {
+        <div class="card-heading">
+          <div>
+            <p class="kicker">{{ 'dashboard.device.kicker' | translate }}</p>
+            <h2>{{ 'dashboard.device.title' | translate: { name: store.senior()?.firstName ?? '' } }}</h2>
+          </div>
+          <span class="online-pill" [class.online-pill--off]="!dev.connected">
+            {{ (dev.connected ? 'device.connected' : 'device.disconnected') | translate }}
+          </span>
+        </div>
+        <div class="battery-row">
+          <div class="battery-illustration" [class.battery-illustration--low]="dev.lowBattery">
+            <span [style.width.%]="dev.batteryPercent"></span>
+          </div>
+          <strong [class.low]="dev.lowBattery">{{ dev.batteryPercent }}%</strong>
+        </div>
+        <div class="device-meta">
+          <span><app-icon name="battery" [size]="16" /> {{ 'device.daysLeft' | translate: { count: dev.estimatedDaysLeft } }}</span>
+          <span><app-icon name="clock" [size]="16" /> {{ dev.lastSignalAt | relativeTime }}</span>
+        </div>
+      } @else {
+        <div class="state"><app-icon name="device" [size]="30" /><p>{{ 'common.loading' | translate }}</p></div>
+      }
+    </article>
+
+    <!-- Alerta destacada -->
+    @if (store.alerts.spotlight(); as alert) {
+      <article class="alert-card" [class.handled]="!alert.isPending">
+        <div class="alert-icon"><app-icon [name]="alert.isPending ? 'bell' : 'check'" /></div>
+        <div>
+          <p>{{ (alert.isPending ? 'dashboard.alert.pending' : 'dashboard.alert.handled') | translate }}</p>
+          <h3>{{ alert.isPending ? (alertTitleKey(alert) | translate: alert.params) : ('dashboard.alert.thanks' | translate) }}</h3>
+          <span>{{ alert.isPending ? (alertDescriptionKey(alert) | translate: alert.params) : ('dashboard.alert.updated' | translate) }}</span>
+        </div>
+        <button type="button" (click)="toggleSpotlight(alert)">
+          {{ (alert.isPending ? 'dashboard.alert.markHandled' : 'dashboard.alert.reopen') | translate }}
+        </button>
+      </article>
+    } @else {
+      <article class="alert-card handled">
+        <div class="alert-icon"><app-icon name="check" /></div>
+        <div>
+          <p>{{ 'dashboard.alert.none' | translate }}</p>
+          <h3>{{ 'alerts.emptyTitle' | translate }}</h3>
+          <span>{{ 'dashboard.alert.noneHint' | translate }}</span>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="lower-grid">
+  <!-- Actividad de hoy -->
+  <article class="chalk-card routine-card">
+    <div class="card-heading">
+      <div>
+        <p class="kicker">{{ 'dashboard.routine.kicker' | translate }}</p>
+        <h2>{{ 'dashboard.routine.title' | translate }}</h2>
+      </div>
+      <button type="button" routerLink="/activity">{{ 'dashboard.routine.viewReport' | translate }} <app-icon name="arrow" [size]="16" /></button>
+    </div>
+
+    <div class="timeline">
+      @for (event of store.activity.today(); track event.id) {
+        <div>
+          <span class="timeline-time">{{ event.time === 'NOW' ? ('time.now' | translate) : event.time }}</span>
+          <i [class.done]="!event.isCurrent" [class.current]="event.isCurrent"></i>
+          <p>
+            <strong>{{ 'activity.events.' + event.type + '.title' | translate }}</strong>
+            <small>{{ 'activity.events.' + event.type + '.description' | translate }}</small>
+          </p>
+        </div>
+      }
+    </div>
+  </article>
+
+  <!-- Red de cuidado -->
+  <article class="chalk-card network-card">
+    <div class="card-heading">
+      <div>
+        <p class="kicker">{{ 'dashboard.network.kicker' | translate }}</p>
+        <h2>{{ 'dashboard.network.title' | translate }}</h2>
+      </div>
+      <button type="button" routerLink="/care-network" [attr.aria-label]="'dashboard.network.open' | translate">
+        <app-icon name="arrow" />
+      </button>
+    </div>
+
+    <div class="caregivers">
+      @for (c of avatars(); track c.id) {
+        <span class="care-avatar" [class.coral]="c.tone === 'coral'" [class.yellow]="c.tone === 'yellow'" [class.mint-bg]="c.tone === 'mint'">{{ c.initials }}</span>
+      }
+      <span class="care-count">{{ 'dashboard.network.count' | translate: { count: store.careNetwork.activeCount() } }}</span>
+    </div>
+
+    @if (store.careNetwork.onShift(); as shift) {
+      <p>{{ 'dashboard.network.shift' | translate: { name: firstName(shift.fullName), time: shiftEnd(shift.shiftEnd) } }}</p>
+    }
+  </article>
+</section>

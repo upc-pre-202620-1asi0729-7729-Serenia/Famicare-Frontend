@@ -1,0 +1,16 @@
+@if (store.senior(); as senior) {
+  @if (store.status() !== 'LOADING') {
+    <div class="safe-badge" [class.safe-badge--attention]="store.status() === 'ATTENTION'" role="status">
+      <app-icon [name]="store.status() === 'SAFE' ? 'shield' : 'warning'" />
+      <span>
+        @if (store.status() === 'SAFE') {
+          <strong>{{ 'status.safe' | translate: { name: senior.firstName } }}</strong>
+          <small>{{ 'status.insideZone' | translate }}</small>
+        } @else {
+          <strong>{{ 'status.attention' | translate: { name: senior.firstName } }}</strong>
+          <small>{{ 'status.reason.' + store.attentionReason() | translate }}</small>
+        }
+      </span>
+    </div>
+  }
+}

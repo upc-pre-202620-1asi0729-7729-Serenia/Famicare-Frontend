@@ -1,0 +1,69 @@
+@if (user(); as u) {
+  <app-page-heading
+    [eyebrow]="'profile.eyebrow' | translate"
+    [title]="'profile.title' | translate"
+    [description]="'profile.description' | translate"
+  />
+
+  <section class="dashboard-grid">
+    <article class="chalk-card profile-card">
+      <div class="profile-head">
+        <span class="avatar-lg">{{ u.initials }}</span>
+        <div>
+          <h2>{{ u.fullName }}</h2>
+          <p>{{ 'profile.roles.' + u.role | translate }}</p>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <div class="form-grid">
+          <div class="field field--full" [class.field--invalid]="invalid('fullName')">
+            <label for="pf-name">{{ 'auth.fields.fullName' | translate }}</label>
+            <input id="pf-name" type="text" formControlName="fullName" maxlength="80" autocomplete="name" />
+            @if (invalid('fullName')) { <p class="field__error">{{ 'errors.required' | translate }}</p> }
+          </div>
+
+          <div class="field">
+            <label for="pf-email">{{ 'auth.fields.email' | translate }}</label>
+            <input id="pf-email" type="email" [value]="u.email" disabled />
+          </div>
+
+          <div class="field" [class.field--invalid]="invalid('phone')">
+            <label for="pf-phone">{{ 'auth.fields.phone' | translate }}</label>
+            <input id="pf-phone" type="tel" formControlName="phone" autocomplete="tel" />
+            @if (invalid('phone')) { <p class="field__error">{{ 'errors.phone' | translate }}</p> }
+          </div>
+        </div>
+
+        @if (saved()) { <p class="auth-success mt" role="status">{{ 'profile.saved' | translate }}</p> }
+        @if (failed()) { <p class="form-error mt" role="alert">{{ 'errors.generic' | translate }}</p> }
+
+        <button type="submit" class="coral-button coral-button--inline mt" [disabled]="saving()">{{ 'profile.save' | translate }}</button>
+      </form>
+    </article>
+
+    <div class="stack">
+      <article class="chalk-card plan-card" id="plan">
+        <div class="card-heading">
+          <div>
+            <p class="kicker">{{ 'profile.menu.subscription' | translate }}</p>
+            <h2>{{ 'profile.plan.' + u.plan + '.name' | translate }}</h2>
+          </div>
+          <span class="online-pill">{{ 'profile.plan.active' | translate }}</span>
+        </div>
+
+        <ul class="plan-list">
+          @for (f of planFeatures; track f) {
+            <li><app-icon name="check" [size]="16" /> {{ 'profile.plan.features.' + f | translate }}</li>
+          }
+        </ul>
+      </article>
+
+      <button type="button" class="ghost-button" (click)="logout()">
+        <app-icon name="logout" [size]="16" /> {{ 'profile.menu.logout' | translate }}
+      </button>
+    </div>
+  </section>
+}

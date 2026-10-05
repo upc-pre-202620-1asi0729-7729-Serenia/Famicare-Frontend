@@ -1,0 +1,31 @@
+:host { display: block; }
+
+.profile-card { padding: 24px; }
+.profile-head { display: flex; align-items: center; gap: 16px; }
+.profile-head h2 { margin: 0; color: var(--cream); font-family: var(--font-hand); font-size: 22px; }
+.profile-head p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.profile-card .rule { margin: 20px 0; }
+
+.avatar-lg {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border-radius: 50%;
+  color: #173a31;
+  background: var(--yellow);
+  font-family: var(--font-hand);
+  font-size: 20px;
+  font-weight: 700;
+  transform: rotate(-3deg);
+}
+
+.field input:disabled { opacity: 0.6; cursor: not-allowed; }
+.mt { margin-top: 18px; }
+
+.plan-card { padding: 20px; scroll-margin-top: 90px; }
+.plan-list { display: grid; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 12px; }
+.plan-list li { display: flex; align-items: center; gap: 10px; }
+.plan-list app-icon { color: var(--mint); }
+
+.stack .ghost-button { margin-top: 0; }

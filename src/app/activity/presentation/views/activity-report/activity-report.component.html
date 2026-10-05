@@ -1,0 +1,79 @@
+<app-page-heading
+  [eyebrow]="'activity.eyebrow' | translate"
+  [title]="'activity.title' | translate"
+  [description]="(store.report()?.routineStable ? 'activity.description.stable' : 'activity.description.changed') | translate: { name: senior()?.firstName ?? '' }"
+/>
+
+@if (store.report(); as report) {
+  <section class="module-board">
+    <div class="module-visual">
+      <div class="chalk-chart" role="img" [attr.aria-label]="'activity.chartLabel' | translate">
+        @for (day of store.days(); track day.date) {
+          <div class="bar-wrap" [class.bar-wrap--today]="day.isToday" [attr.title]="number(day.steps)">
+            <div class="bar" [style.height.%]="day.heightPercent"></div>
+            <span>{{ dayInitial(day.date) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="module-list">
+      <article class="list-row">
+        <span class="list-icon"><app-icon name="chart" /></span>
+        <div>
+          <h3>{{ 'activity.steps' | translate: { count: number(report.averageSteps) } }}</h3>
+          <p>{{ 'activity.stepsMeta' | translate: { change: sign(report.weeklyChangePercent) } }}</p>
+        </div>
+      </article>
+
+      <article class="list-row">
+        <span class="list-icon"><app-icon name="location" /></span>
+        <div>
+          <h3>{{ 'activity.outings' | translate: { count: report.outings } }}</h3>
+          <p>{{ (report.allOutingsSafe ? 'activity.outingsAllSafe' : 'activity.outingsSome') | translate: { inside: report.outingsInsideSafeZones, total: report.outings } }}</p>
+        </div>
+      </article>
+
+      <article class="list-row">
+        <span class="list-icon" [class.list-icon--coral]="!report.routineStable"><app-icon name="clock" /></span>
+        <div>
+          <h3>{{ (report.routineStable ? 'activity.routineStable' : 'activity.routineChanged') | translate }}</h3>
+          <p>{{ (report.routineStable ? 'activity.routineStableMeta' : 'activity.routineChangedMeta') | translate }}</p>
+        </div>
+      </article>
+
+      <button type="button" class="coral-button" (click)="showDetails.set(!showDetails())" [attr.aria-expanded]="showDetails()">
+        {{ (showDetails() ? 'activity.hideDetails' : 'common.viewAllDetails') | translate }} <app-icon name="arrow" [size]="17" />
+      </button>
+    </div>
+  </section>
+
+  @if (showDetails()) {
+    <section class="chalk-card detail-card">
+      <div class="card-heading">
+        <div>
+          <p class="kicker">{{ 'activity.detailKicker' | translate }}</p>
+          <h2>{{ 'activity.detailTitle' | translate }}</h2>
+        </div>
+      </div>
+
+      <div class="days">
+        @for (day of store.days(); track day.date) {
+          <div class="route-stat" [class.is-today]="day.isToday">
+            <span>{{ dayLong(day.date) }}@if (day.isToday) { · {{ 'time.today' | translate }} }</span>
+            <strong [class.mint]="bestDay()?.date === day.date">{{ 'activity.stepsShort' | translate: { count: number(day.steps) } }}</strong>
+          </div>
+        }
+      </div>
+    </section>
+  }
+} @else {
+  <div class="state">
+    @if (store.error()) {
+      <p class="form-error">{{ 'errors.generic' | translate }}</p>
+      <button type="button" class="ghost-button ghost-button--inline" (click)="store.load()">{{ 'common.retry' | translate }}</button>
+    } @else {
+      <p>{{ 'common.loading' | translate }}</p>
+    }
+  </div>
+}

@@ -1,0 +1,11 @@
+:host { display: block; }
+
+.detail-card { margin-top: 20px; padding: 22px 24px; }
+.detail-card .rule { margin: 20px 0 8px; }
+
+.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.actions .ghost-button { margin-top: 0; }
+
+@media (max-width: 560px) {
+  .actions { grid-template-columns: 1fr; }
+}

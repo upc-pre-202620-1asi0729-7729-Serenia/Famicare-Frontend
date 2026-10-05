@@ -1,0 +1,25 @@
+<div class="lang">
+  <button type="button" class="lang__btn" (click)="toggle()" [attr.aria-expanded]="open()" aria-haspopup="listbox">
+    <app-icon name="globe" [size]="16" />
+    <span>{{ current.code }}</span>
+  </button>
+
+  @if (open()) {
+    <ul class="lang__menu" role="listbox">
+      @for (lang of languages; track lang.code) {
+        <li>
+          <button
+            type="button"
+            role="option"
+            [attr.aria-selected]="lang.code === current.code"
+            [class.is-active]="lang.code === current.code"
+            (click)="select(lang)"
+          >
+            <span class="lang__code">{{ lang.code }}</span>
+            {{ lang.label }}
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

@@ -1,0 +1,25 @@
+:host { display: block; }
+
+.module-list .chip-row { margin-bottom: 8px; }
+.module-list .state { min-height: 120px; }
+
+.text-action {
+  padding: 4px 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  color: var(--mint);
+  background: transparent;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.text-action--coral { color: var(--coral); }
+
+.list-row__actions .icon-button { text-decoration: none; }
+
+@media (max-width: 560px) {
+  .list-row { grid-template-columns: auto 1fr; }
+  .list-row__actions { grid-column: 1 / -1; justify-content: space-between; }
+}

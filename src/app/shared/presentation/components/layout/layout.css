@@ -1,0 +1,96 @@
+.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 72% 14%, rgba(255, 255, 255, 0.035), transparent 18%),
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.025), transparent 24%),
+    var(--board);
+}
+
+main { min-width: 0; margin-left: var(--sidebar-w); }
+
+.topbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  height: var(--topbar-h);
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 4.2vw;
+  border-bottom: 1px solid rgba(248, 242, 223, 0.1);
+  background: rgba(22, 72, 61, 0.84);
+  backdrop-filter: blur(12px);
+}
+
+.top-actions { display: flex; align-items: center; gap: 17px; }
+
+.notification-button,
+.menu-button {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(248, 242, 223, 0.16);
+  border-radius: 50%;
+  color: var(--cream);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.notification-button:hover,
+.menu-button:hover { background: rgba(255, 255, 255, 0.08); }
+
+.notification-button span {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  box-sizing: content-box;
+  border: 2px solid var(--board);
+  border-radius: 50%;
+  background: var(--coral);
+}
+
+.menu-button,
+.mobile-brand,
+.nav-scrim { display: none; }
+
+@media (max-width: 780px) {
+  main { margin-left: 0; }
+
+  .topbar { height: 66px; justify-content: space-between; padding: 0 18px; }
+  .menu-button { display: grid; }
+
+  .mobile-brand {
+    display: block;
+    margin-right: auto;
+    margin-left: 12px;
+    color: var(--mint);
+    font-family: var(--font-hand);
+    font-size: 21px;
+    font-weight: 700;
+  }
+
+  .mobile-brand span { color: var(--coral); }
+
+  .nav-scrim {
+    position: fixed;
+    z-index: 40;
+    inset: 0;
+    display: block;
+    border: 0;
+    background: rgba(3, 20, 17, 0.68);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .nav-scrim.is-open { opacity: 1; pointer-events: auto; }
+}
+
+@media (max-width: 560px) {
+  .top-actions { gap: 8px; }
+}

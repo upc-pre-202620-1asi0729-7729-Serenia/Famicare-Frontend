@@ -1,0 +1,37 @@
+@startuml auth
+title Bounded context: auth
+class User {
+  + id: number
+  + fullName: string
+  + email: string
+  + phone: string
+  + role: CaregiverRole
+  + plan: SubscriptionPlan
+  + firstName: string
+  + initials: string
+}
+class UserAssembler
+class AuthApi {
+ + signIn()
+ + signUp()
+ + forgotPassword()
+ + updateProfile()
+ }
+class AuthStore <<Injectable>> {
+  + token: Signal<string | null>
+  + currentUser: Signal<User | null>
+  + isAuthenticated: Signal<boolean>
+  + signIn() + signUp() + forgotPassword() + updateProfile() + logout()
+}
+class jwtInterceptor <<HttpInterceptorFn>>
+class authGuard <<CanActivateFn>>
+class guestGuard <<CanActivateFn>>
+User ..|> BaseEntity
+UserAssembler ..|> BaseAssembler
+AuthApi --|> BaseApi
+AuthApi --> UserAssembler
+AuthStore --> AuthApi
+jwtInterceptor --> AuthStore
+authGuard --> AuthStore
+guestGuard --> AuthStore
+@enduml

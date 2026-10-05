@@ -1,0 +1,34 @@
+:host { display: block; flex-shrink: 0; }
+
+.safe-badge {
+  display: flex;
+  min-width: 220px;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 15px;
+  border: 1px dashed rgba(152, 213, 184, 0.38);
+  border-radius: 7px 11px 8px 12px;
+  color: var(--mint);
+  transform: rotate(-0.4deg);
+}
+
+.safe-badge--attention {
+  border-color: rgba(241, 120, 82, 0.55);
+  color: var(--coral);
+}
+
+.safe-badge span { display: grid; }
+
+.safe-badge strong {
+  color: var(--cream);
+  font-family: var(--font-hand);
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.safe-badge small { margin-top: 3px; color: #a8c2b7; font-size: 10px; }
+
+@media (max-width: 780px) {
+  .safe-badge { min-width: 0; padding: 8px; }
+  .safe-badge span { display: none; }
+}

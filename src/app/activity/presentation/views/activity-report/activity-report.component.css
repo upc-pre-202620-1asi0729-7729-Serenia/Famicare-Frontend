@@ -1,0 +1,10 @@
+:host { display: block; }
+
+.detail-card { margin-top: 20px; padding: 22px 24px; }
+.days { margin-top: 14px; }
+.days .route-stat { border-bottom: 1px dashed var(--line-dash); font-size: 12px; }
+.days .route-stat:last-child { border-bottom: 0; }
+.days .route-stat.is-today span { color: var(--coral); }
+
+.module-visual .chalk-chart { height: 100%; min-height: 280px; }
+.bar-wrap { flex: 1; max-width: 34px; width: auto; }

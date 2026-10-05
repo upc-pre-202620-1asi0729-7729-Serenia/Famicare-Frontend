@@ -1,0 +1,45 @@
+@startuml senior
+title Bounded context: senior
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class Senior {
+  + id: number
+  + firstName: string
+  + fullName: string
+  + initials: string
+  + age: number
+  }
+}
+
+package "infrastructure" {
+  class SeniorResource <<interface>>
+  class SeniorAssembler {
+    + toEntityFromResource(r): Senior
+    + toResourceFromEntity(e): SeniorResource
+    + toEntitiesFromResponse(list): Senior[]
+  }
+  class SeniorApi {
+  + getCurrent(): Observable<Senior>
+  }
+  class "SeniorApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class SeniorStore <<Injectable>> {
+  + senior: Signal<Senior | null>
+  + load(): void
+  }
+}
+
+SeniorApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+SeniorAssembler ..|> BaseAssembler
+Senior ..|> BaseEntity
+SeniorApi *-- Endpoint
+Endpoint --> SeniorAssembler
+SeniorAssembler ..> SeniorResource
+SeniorStore --> SeniorApi
+SeniorStore o-- Senior
+
+@enduml

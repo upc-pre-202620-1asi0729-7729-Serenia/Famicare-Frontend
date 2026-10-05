@@ -1,0 +1,54 @@
+@startuml location
+title Bounded context: location
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class LocationRecord {
+  + id: number
+  + placeName: string
+  + address: string
+  + district: string
+  + recordedAt: string
+  + accuracyMeters: number
+  + movementState: MovementState
+  + insideSafeZone: boolean
+  }
+}
+
+package "infrastructure" {
+  class LocationResource <<interface>>
+  class LocationAssembler {
+    + toEntityFromResource(r): LocationRecord
+    + toResourceFromEntity(e): LocationResource
+    + toEntitiesFromResponse(list): LocationRecord[]
+  }
+  class LocationApi {
+  + getCurrent()
+  + getHistory()
+  + refresh()
+  }
+  class "LocationApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class LocationStore <<Injectable>> {
+  + current: Signal<LocationRecord | null>
+  + history: Signal<LocationRecord[]>
+  + insideSafeZone: Signal<boolean>
+  + load(): void
+  + loadHistory(): void
+  + refresh(): void
+  }
+}
+
+LocationApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+LocationAssembler ..|> BaseAssembler
+LocationRecord ..|> BaseEntity
+LocationApi *-- Endpoint
+Endpoint --> LocationAssembler
+LocationAssembler ..> LocationResource
+LocationStore --> LocationApi
+LocationStore o-- LocationRecord
+
+@enduml

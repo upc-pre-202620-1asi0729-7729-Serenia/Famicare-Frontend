@@ -1,0 +1,53 @@
+@startuml safe-zones
+title Bounded context: safe-zones
+skinparam classAttributeIconSize 0
+
+package "domain" {
+  class SafeZone {
+  + id: number
+  + name: string
+  + type: SafeZoneType
+  + radiusMeters: number
+  + active: boolean
+  + address: string
+  }
+}
+
+package "infrastructure" {
+  class SafeZoneResource <<interface>>
+  class SafeZoneAssembler {
+    + toEntityFromResource(r): SafeZone
+    + toResourceFromEntity(e): SafeZoneResource
+    + toEntitiesFromResponse(list): SafeZone[]
+  }
+  class SafeZoneApi {
+  + getSafeZones()
+  + createSafeZone(zone)
+  + setActive(id, active)
+  + deleteSafeZone(id)
+  }
+  class "SafeZoneApiEndpoint" as Endpoint
+}
+
+package "application" {
+  class SafeZoneStore <<Injectable>> {
+  + zones: Signal<SafeZone[]>
+  + activeCount: Signal<number>
+  + load(): void
+  + create(props, onDone?): void
+  + toggle(zone): void
+  + remove(id): void
+  }
+}
+
+SafeZoneApi --|> BaseApi
+Endpoint --|> BaseApiEndpoint
+SafeZoneAssembler ..|> BaseAssembler
+SafeZone ..|> BaseEntity
+SafeZoneApi *-- Endpoint
+Endpoint --> SafeZoneAssembler
+SafeZoneAssembler ..> SafeZoneResource
+SafeZoneStore --> SafeZoneApi
+SafeZoneStore o-- SafeZone
+
+@enduml

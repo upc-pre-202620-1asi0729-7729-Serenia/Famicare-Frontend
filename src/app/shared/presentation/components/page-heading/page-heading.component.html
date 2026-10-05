@@ -1,0 +1,8 @@
+<div class="page-heading">
+  <div>
+    @if (eyebrow()) { <p class="eyebrow">{{ eyebrow() }}</p> }
+    <h1>{{ title() }}</h1>
+    @if (description()) { <p>{{ description() }}</p> }
+  </div>
+  <app-safe-badge></app-safe-badge>
+</div>
