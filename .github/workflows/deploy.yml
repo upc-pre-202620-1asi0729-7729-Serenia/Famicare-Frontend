@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx ng build --configuration production --base-href /Famicare-Landing-Page/
+      - name: Ver carpeta de salida
+        run: ls -R dist | head -30
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/Famicare-Landing-Page/browser
